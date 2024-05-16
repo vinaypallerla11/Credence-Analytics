@@ -7,6 +7,7 @@ const app = express();
 app.use(express.json())
 let db = null;
 
+
 const initializeDBAndServer = async () => {
   try {
     db = await open({ filename: dbPath, driver: sqlite3.Database });
@@ -20,6 +21,8 @@ const initializeDBAndServer = async () => {
 };
 initializeDBAndServer();
 
+
+// GET API
 
 app.get("/emp/", async (request, response) => {
   const getEmpQuery = `
@@ -38,6 +41,8 @@ app.get("/emp/", async (request, response) => {
 });
 
 
+// POST API
+
 app.post("/emp/", async (request, response) => {
     const { id, name, img, summary } = request.body;
 
@@ -55,6 +60,7 @@ app.post("/emp/", async (request, response) => {
 });
 
 
+// PUT API
 
 app.put("/emp/:id", async (request, response) => {
     const { id } = request.params;
@@ -78,6 +84,9 @@ app.put("/emp/:id", async (request, response) => {
         response.status(500).send("Error updating employee");
     }
 });
+
+
+// DELETE API
 
 app.delete("/emp/:id", async (request, response) => {
     const { id } = request.params;
